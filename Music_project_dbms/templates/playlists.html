@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>📂 Playlists</h2>
+
+<!-- 🔹 PLAYLIST TABLE -->
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Name</th>
+<th>Action</th>
+</tr>
+</thead>
+
+<tbody>
+{% for p in playlists %}
+<tr>
+<td>{{ p.playlist_id }}</td>
+<td>{{ p.name }}</td>
+<td>
+<a href="/delete_playlist/{{ p.playlist_id }}" style="color:red;">Delete</a>
+</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+<hr>
+
+<!-- 🔹 CREATE PLAYLIST -->
+<h3>Create Playlist</h3>
+<form method="POST" action="/add_playlist">
+    <input type="number" name="playlist_id" placeholder="Playlist ID" required>
+    <input type="text" name="name" placeholder="Playlist Name" required>
+    <button type="submit">Create</button>
+</form>
+
+<hr>
+
+<!-- 🔹 ADD SONG TO PLAYLIST -->
+<h3>Add Song to Playlist</h3>
+
+<form method="POST" action="/add_to_playlist">
+
+    <!-- Playlist Dropdown -->
+    <select name="playlist_id" required>
+        {% for p in playlists %}
+        <option value="{{ p.playlist_id }}">
+            {{ p.playlist_id }} - {{ p.name }}
+        </option>
+        {% endfor %}
+    </select>
+
+    <!-- Song Dropdown -->
+    <select name="song_id" required>
+        {% for s in songs %}
+        <option value="{{ s.song_id }}">
+            {{ s.song_id }} - {{ s.title }}
+        </option>
+        {% endfor %}
+    </select>
+
+    <button type="submit">Add</button>
+</form>
+
+<hr>
+
+<!-- 🔹 DISPLAY PLAYLIST SONGS -->
+<h3>Playlist Songs</h3>
+
+<table>
+<thead>
+<tr>
+<th>Playlist</th>
+<th>Song</th>
+</tr>
+</thead>
+
+<tbody>
+{% for ps in playlist_songs %}
+<tr>
+<td>{{ ps.playlist }}</td>
+<td>{{ ps.title }}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+{% endblock %}

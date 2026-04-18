@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>🎵 Songs</h2>
+
+<!-- 🔍 SEARCH -->
+<form method="GET" action="/search">
+    <input type="text" name="query" placeholder="Search songs...">
+    <button type="submit">Search</button>
+</form>
+
+<br>
+
+<table>
+<tr>
+<th>ID</th><th>Title</th><th>Artist</th><th>Genre</th><th>Album</th><th>Action</th>
+</tr>
+
+{% for song in songs %}
+<tr>
+<td>{{ song.song_id }}</td>
+<td>{{ song.title }}</td>
+<td>{{ song.artist }}</td>
+<td>{{ song.genre_name }}</td>
+<td>{{ song.album }}</td>
+<td>
+<a href="/delete_song/{{ song.song_id }}" style="color:red;">Delete</a>
+</td>
+</tr>
+{% endfor %}
+</table>
+
+<hr>
+
+<h3>Add Song</h3>
+
+<form method="POST" action="/add_song">
+<input type="number" name="song_id" placeholder="Song ID" required>
+<input type="text" name="title" placeholder="Title">
+
+<input type="number" name="duration" placeholder="Duration">
+
+<!-- 🔽 Album Dropdown -->
+<select name="album_id">
+    {% for album in albums %}
+    <option value="{{ album.album_id }}">
+        {{ album.album_id }} - {{ album.title }}
+    </option>
+    {% endfor %}
+</select>
+
+<!-- 🔽 Genre Dropdown -->
+<select name="genre_id">
+    {% for genre in genres %}
+    <option value="{{ genre.genre_id }}">
+        {{ genre.genre_id }} - {{ genre.genre_name }}
+    </option>
+    {% endfor %}
+</select>
+
+<button type="submit">Add Song</button>
+</form>
+
+{% endblock %}

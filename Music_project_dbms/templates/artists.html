@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>🎤 Artists</h2>
+
+<table>
+<tr><th>ID</th><th>Name</th><th>Action</th></tr>
+
+{% for artist in artists %}
+<tr>
+<td>{{ artist.artist_id }}</td>
+<td>{{ artist.name }}</td>
+<td>
+<a href="/delete_artist/{{ artist.artist_id }}" style="color:red;">Delete</a>
+</td>
+</tr>
+{% endfor %}
+</table>
+
+<hr>
+
+<h3>Add Artist</h3>
+<form method="POST" action="/add_artist">
+<input type="number" name="artist_id" placeholder="Artist ID" required>
+<input type="text" name="name" placeholder="Artist Name" required>
+<button type="submit">Add</button>
+</form>
+
+{% endblock %}
